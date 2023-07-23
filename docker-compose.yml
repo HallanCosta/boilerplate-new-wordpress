@@ -37,6 +37,7 @@ services:
     image: wordpress:6.2.2-php8.2
     ports:
       - 3001:80
+      - 3002:443
     volumes:
       - ./src:/var/www/html/
     restart: always
@@ -45,14 +46,6 @@ services:
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: 
       WORDPRESS_DB_NAME: app
-    command: >
-      sh -c "sleep 10 
-      && rm -rf /var/www/html/wp-content/themes/twentytwentyone
-      && rm -rf /var/www/html/wp-content/themes/twentytwentytwo
-      && rm -rf /var/www/html/wp-content/themes/twentytwentythree
-      && rm -rf /var/www/html/license.txt
-      && rm -rf /var/www/html/readme.html
-      && rm -rf /var/www/html/Remove"
     networks:
       - app-network
     extra_hosts:

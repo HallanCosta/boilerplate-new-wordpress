@@ -5,5 +5,11 @@ src/wp-admin
 src/wp-content/*
 !src/wp-content/themes
 src/wp-content/themes/index.php
+src/wp-content/themes/twentytwentyone
+src/wp-content/themes/twentytwentytwo
+src/wp-content/themes/twentytwentythree
+src/wp-content/themes/license.txt
+src/wp-content/themes/readme.html
+src/wp-content/themes/Remove
 src/wp-includes
 *.log
