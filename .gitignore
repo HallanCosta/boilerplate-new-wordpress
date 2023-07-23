@@ -1,0 +1,9 @@
+src/*.php
+!wp-config.php
+build/node_modules
+src/wp-admin
+src/wp-content/*
+!src/wp-content/themes
+src/wp-content/themes/index.php
+src/wp-includes
+*.log

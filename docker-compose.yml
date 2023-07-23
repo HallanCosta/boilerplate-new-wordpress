@@ -1,0 +1,108 @@
+version: '3.9'
+
+services:
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: app
+  #   image: webdevops/php-nginx-dev:7.4
+  #   working_dir: /app
+  #   volumes:
+  #     - ./src:/app
+  #   environment:
+  #     - PHP_DATE_TIMEZONE="America/Sao_Paulo"
+  #     - PHP_DISPLAY_ERRORS=1
+  #     - PHP_MEMORY_LIMIT=1024M
+  #     - PHP_MAX_EXECUTION_TIME=120
+  #     - PHP_POST_MAX_SIZE=50M
+  #     - PHP_UPLOAD_MAX_FILESIZE=1024M
+  #     - PHP_DEBUGGER=xdebug
+  #     - PHP_IDE_CONFIG=serverName=_
+  #     - XDEBUG_MODE=debug
+  #     - XDEBUG_DISCOVER_CLIENT_HOST=0
+  #     - XDEBUG_IDE_KEY=PHPSTORM
+  #     - XDEBUG_MAX_NESTING_LEVEL=1500
+  #     - XDEBUG_START_WITH_REQUEST=yes
+  #     - XDEBUG_CLIENT_HOST=host.docker.internal
+  #     - XDEBUG_CLIENT_PORT=9003
+  #     - XDEBUG_OUTPUT_DIR=/app/.xdebug
+  #     - TZ="America/Sao_Paulo"
+  #   ports:
+  #     - '8181:80'
+
+  db:
+    container_name: mysql
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: app 
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: db
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      - db
+    image: wordpress:6.2.2-php8.2
+    ports:
+      - 3001:80
+      - 3002:443
+    volumes:
+      - ./src:/var/www/html/
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: 
+      WORDPRESS_DB_NAME: app
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Serviço do WP-CLI
+  # wpcli:
+  #   image: wordpress:cli
+  #   container_name: wpcli-container
+  #   restart: always
+  #   working_dir: /app
+  #   command: >
+  #     sh -c "sleep 5 
+  #     && wp core download 
+  #     --locale=pt_BR
+  #     && wp core install
+  #     --url=http://localhost:8000
+  #     --title='Your Site Title'
+  #     --admin_user=admin
+  #     --admin_password=admin
+  #     --admin_email=admin@example.com
+  #     --skip-email"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+    mysql:
+    src:
