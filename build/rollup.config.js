@@ -5,6 +5,8 @@ import alias from 'rollup-plugin-alias';
 import { terser } from "rollup-plugin-terser";
 import browsersync from "rollup-plugin-browsersync";
 
+const port = 12345;
+
 export default {
   input: 'src/js/index.js',
   output: {
@@ -15,7 +17,7 @@ export default {
     terser(),
     browsersync({
       proxy: 'http://localhost:3001',
-      port: 12345,
+      port: port,
       files: ["../**/*.php", "../**/*.js"],
       notify: true,
       ignore: ['node_modules/**/*']
@@ -45,6 +47,16 @@ export default {
         ],
         babelrc: false,
         runtimeHelpers: true
-    })
+    }),
+    {
+      name: 'afterBuild',
+      generateBundle(options, bundle) {
+        console.log('\n');
+        console.log('\x1b[34m%s\x1b[0m', '> By: Hállan Neoplan');
+        console.log('\x1b[33m%s\x1b[0m', `> Live reload running: http://localhost:${port}`);
+        console.log('\x1b[32m%s\x1b[0m', '> Success build');
+        console.log('\n');
+      }
+    },
   ]
 };
