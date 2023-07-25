@@ -12,5 +12,5 @@ http://localhost:3001
 
 ## Migration access
 
-Username: admin
+Username: admin <br>
 Password: 6MD!BOh2rTtxuSzmqA
