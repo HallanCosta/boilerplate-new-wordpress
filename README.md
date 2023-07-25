@@ -25,5 +25,9 @@ Enter the folder
 Install dependencies
 `npm install --legacy-peer-deps`
 
-Run the build
+Run the build with live relaod
 `npm run watch`
+
+Access project live reload
+
+http://localhost:12345
