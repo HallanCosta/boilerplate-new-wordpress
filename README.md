@@ -14,3 +14,16 @@ http://localhost:3001
 
 Username: admin <br>
 Password: 6MD!BOh2rTtxuSzmqA
+
+## Running folder build to generate style.css and bundle.js
+
+<b>Required: Node.JS 16</b><br>
+
+Enter the folder
+`cd build`
+
+Install dependencies
+`npm install --legacy-peer-deps`
+
+Run the build
+`npm run watch`
