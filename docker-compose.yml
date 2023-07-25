@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: 
       MYSQL_DATABASE: wpdatabase 
     ports:
-      - 3306:3306
+      - 33066:3306
     volumes:
       - ./mysql:/var/lib/mysql
     networks:
@@ -37,7 +37,6 @@ services:
     image: wordpress:6.2.2-php8.2
     ports:
       - 3001:80
-      - 3002:443
     volumes:
       - ./src:/var/www/html/
     restart: always
